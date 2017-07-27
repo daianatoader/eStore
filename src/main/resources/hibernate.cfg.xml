@@ -18,6 +18,7 @@
         <property name="hibernate.connection.username">
             root
         </property>
+            verboteneliebe97
         <property name="hibernate.connection.password">
         </property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
