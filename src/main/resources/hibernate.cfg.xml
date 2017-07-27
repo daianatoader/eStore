@@ -19,6 +19,7 @@
             root
         </property>
         <property name="hibernate.connection.password">
+            adminadmin
         </property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
     </session-factory>
