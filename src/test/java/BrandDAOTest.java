@@ -32,7 +32,9 @@ public class BrandDAOTest {
         Brand b1= new Brand("Motorola","electronice");
         for(Brand brand:bdao.getAll()){
             if(brand.getBrandName().equals("Motorola")){
-                bdao.update(brand.getId(),b1);
+                brand.setBrandName(b1.getBrandName());
+                brand.setDescription(b1.getDescription());
+                bdao.update(brand.getId(),brand);
                 assertTrue(bdao.getById(brand.getId()).getDescription().equals("electronice"));
             }
         }

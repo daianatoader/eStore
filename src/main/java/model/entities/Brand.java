@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "ID")
     private int id;
 
     @Column(name = "brand_name")
