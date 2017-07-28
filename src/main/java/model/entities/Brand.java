@@ -1,7 +1,5 @@
 package model.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,7 +7,7 @@ import javax.persistence.*;
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private int id;
 
     @Column(name = "brand_name")

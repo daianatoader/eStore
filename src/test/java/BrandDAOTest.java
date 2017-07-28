@@ -28,12 +28,10 @@ public class BrandDAOTest {
         assertTrue(tr);
 
         //---------------------UPDATE-TEST--------------------------
-        Brand b1 = new Brand("Motorola", "electronice");
         for (Brand brand : bdao.getAll()) {
             if (brand.getBrandName().equals("Motorola")) {
-                brand.setBrandName(b1.getBrandName());
-                brand.setDescription(b1.getDescription());
-                bdao.update(brand.getId(), brand);
+                brand.setDescription("electronice");
+                bdao.update(brand);
                 assertTrue(bdao.getById(brand.getId()).getDescription().equals("electronice"));
             }
         }
@@ -41,7 +39,7 @@ public class BrandDAOTest {
         //---------------------DELETE-TEST--------------------------
         for (Brand brand : bdao.getAll()) {
             if (brand.getBrandName().equals("Motorola")) {
-                bdao.delete(brand.getId());
+                bdao.delete(brand);
             }
         }
 

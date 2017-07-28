@@ -103,18 +103,14 @@ public class BrandDAO implements IBrandDAO {
     /**
      * method that updates data based on ID
      *
-     * @param id
      * @param brand
      */
-    public void update(int id, Brand brand) {
+    public void update(Brand brand) {
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Brand brandToUpdate = (Brand) session.get(Brand.class, id);
-            brandToUpdate.setBrandName(brand.getBrandName());
-            brandToUpdate.setDescription(brand.getDescription());
-            session.update(brandToUpdate);
+            session.update(brand);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
@@ -127,15 +123,13 @@ public class BrandDAO implements IBrandDAO {
     /**
      * method that deletes a brand from DB based on ID
      *
-     * @param id
+     * @param brand
      */
-    public void delete(int id) {
+    public void delete(Brand brand) {
         Session session = factory.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Brand brand =
-                    (Brand) session.get(Brand.class, id);
             session.delete(brand);
             tx.commit();
         } catch (HibernateException e) {

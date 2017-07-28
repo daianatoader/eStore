@@ -13,7 +13,7 @@ public interface IBrandDAO {
 
     void add(Brand brand);
 
-    void update(int id, Brand brand);
+    void update(Brand brand);
 
-    void delete(int id);
+    void delete(Brand brand);
 }
