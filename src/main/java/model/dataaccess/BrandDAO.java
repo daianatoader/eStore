@@ -87,10 +87,7 @@ public class BrandDAO implements IBrandDAO {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Brand brandTmp = new Brand(brand.getBrandName(), brand.getDescription());
-            brandTmp.setBrandName(brand.getBrandName());
-            brandTmp.setDescription(brand.getDescription());
-            session.save(brandTmp);
+            session.save(brand);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
