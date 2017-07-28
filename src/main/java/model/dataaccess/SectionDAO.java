@@ -1,6 +1,7 @@
 package model.dataaccess;
 
 import model.entities.Brand;
+import model.entities.Section;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,12 +12,11 @@ import java.util.List;
 import static main.MainClass.factory;
 
 /**
- * DAO class for Brand entity that implements IBrandDAO which defines CRUD operations
+ * DAO class for Section entity that implements ISectionDAO which defines CRUD operations
  */
-public class BrandDAO implements IBrandDAO {
+public class SectionDAO implements ISectionDAO {
 
-
-    public BrandDAO() {
+    public SectionDAO() {
     }
 
     public static void getConfig() {
@@ -24,7 +24,7 @@ public class BrandDAO implements IBrandDAO {
             factory = new Configuration().
                     configure().
                     addPackage("model.entities"). //add package if used.
-                    addAnnotatedClass(Brand.class).
+                    addAnnotatedClass(Section.class).
                     buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
@@ -33,40 +33,40 @@ public class BrandDAO implements IBrandDAO {
     }
 
     /**
-     * method that selects all information from brand table
+     * method that return a list of Section objects with data from DB
      *
-     * @return List<Brand>
+     * @return List<Section>
      */
-    public List<Brand> getAll() {
+    public List<Section> getAll() {
         Session session = factory.openSession();
-        List brands = null;
+        List sections = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            brands = session.createQuery("from model.entities.Brand").list();
+            sections = session.createQuery("from model.entities.Section").list();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return brands;
+        return sections;
     }
 
     /**
-     * method that returns a Brand based on ID
+     * method that returns an abject of type Section with data from DB
      *
      * @param id
-     * @return Brand
+     * @return Section
      */
-    public Brand getById(int id) {
-        Brand brand = null;
+    public Section getById(int id) {
+        Section section = null;
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                brand = session.load(Brand.class, id);
+                section = session.load(Section.class, id);
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
                 e.printStackTrace();
@@ -76,21 +76,21 @@ public class BrandDAO implements IBrandDAO {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return brand;
+        return section;
     }
 
     /**
-     * method that adds a new Brand object in DB
+     * method that adds data in DB
      *
-     * @param brand
+     * @param section
      */
-    public void add(Brand brand) {
+    public void add(Section section) {
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                session.save(brand);
+                session.save(section);
                 tx.commit();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
@@ -104,17 +104,17 @@ public class BrandDAO implements IBrandDAO {
     }
 
     /**
-     * method that updates data based on ID
+     * method that updates data in DB
      *
-     * @param brand
+     * @param section
      */
-    public void update(Brand brand) {
+    public void update(Section section) {
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                session.update(brand);
+                session.update(section);
                 tx.commit();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
@@ -128,17 +128,17 @@ public class BrandDAO implements IBrandDAO {
     }
 
     /**
-     * method that deletes a brand from DB based on ID
+     * method that deletes a field form section table from DB
      *
-     * @param brand
+     * @param section
      */
-    public void delete(Brand brand) {
+    public void delete(Section section) {
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                session.delete(brand);
+                session.delete(section);
                 tx.commit();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
@@ -150,5 +150,4 @@ public class BrandDAO implements IBrandDAO {
             System.out.println(e.getMessage());
         }
     }
-
 }
