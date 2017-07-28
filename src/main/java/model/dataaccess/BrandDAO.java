@@ -44,7 +44,6 @@ public class BrandDAO implements IBrandDAO {
         try {
             tx = session.beginTransaction();
             brands = session.createQuery("from model.entities.Brand").list();
-            tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -67,7 +66,6 @@ public class BrandDAO implements IBrandDAO {
         try {
             tx = session.beginTransaction();
             brand = session.load(Brand.class, id);
-            tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
