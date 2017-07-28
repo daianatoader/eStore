@@ -1,4 +1,5 @@
 package model.entities;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,7 +18,8 @@ public class Brand {
     @Column(name = "description")
     private String description;
 
-    public Brand(){}
+    public Brand() {
+    }
 
     public Brand(String brandName, String description) {
         this.brandName = brandName;

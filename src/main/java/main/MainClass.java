@@ -14,23 +14,24 @@ import model.entities.*;
 import static model.dataaccess.BrandDAO.getConfig;
 
 public class MainClass {
- public static SessionFactory factory;
- public static void main(String[] args){
+    public static SessionFactory factory;
+
+    public static void main(String[] args) {
 
 
-  getConfig();
+        getConfig();
 
-  IBrandDAO bdao = new BrandDAO();
-  Brand brand = new Brand("Philips","electronice");
-  Brand brand2 = new Brand("Colgate","igiena");
-  bdao.delete(3);
+        IBrandDAO bdao = new BrandDAO();
+        Brand brand = new Brand("Philips", "electronice");
+        Brand brand2 = new Brand("Colgate", "igiena");
+        bdao.delete(3);
 
-  //bdao.add(brand);
-  // bdao.add(brand2);
+        //bdao.add(brand);
+        // bdao.add(brand2);
 
-  for(Brand b:bdao.getAll())
-   System.out.println(b.getBrandName()+" "+b.getDescription());
+        for (Brand b : bdao.getAll())
+            System.out.println(b.getBrandName() + " " + b.getDescription());
 
-  System.out.println(bdao.getById(1).getBrandName());
- }
+        System.out.println(bdao.getById(1).getBrandName());
+    }
 }

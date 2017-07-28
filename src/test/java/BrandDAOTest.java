@@ -11,36 +11,35 @@ import static org.junit.Assert.*;
 public class BrandDAOTest {
 
 
-
     @Test
-    public void crudTest(){
+    public void crudTest() {
         getConfig();
         IBrandDAO bdao = new BrandDAO();
 
         //----------------------ADD_TEST------------------------------
-        Brand b= new Brand("Motorola","telefoane");
+        Brand b = new Brand("Motorola", "telefoane");
         bdao.add(b);
-        boolean tr=false;
-        for(Brand brand:bdao.getAll()){
-            if(brand.getBrandName().equals("Motorola")){
-                tr=true;
+        boolean tr = false;
+        for (Brand brand : bdao.getAll()) {
+            if (brand.getBrandName().equals("Motorola")) {
+                tr = true;
             }
         }
         assertTrue(tr);
 
         //---------------------UPDATE-TEST--------------------------
-        Brand b1= new Brand("Motorola","electronice");
-        for(Brand brand:bdao.getAll()){
-            if(brand.getBrandName().equals("Motorola")){
+        Brand b1 = new Brand("Motorola", "electronice");
+        for (Brand brand : bdao.getAll()) {
+            if (brand.getBrandName().equals("Motorola")) {
                 brand.setBrandName(b1.getBrandName());
                 brand.setDescription(b1.getDescription());
-                bdao.update(brand.getId(),brand);
+                bdao.update(brand.getId(), brand);
                 assertTrue(bdao.getById(brand.getId()).getDescription().equals("electronice"));
             }
         }
 
         //---------------------DELETE-TEST--------------------------
-        for(Brand brand:bdao.getAll()) {
+        for (Brand brand : bdao.getAll()) {
             if (brand.getBrandName().equals("Motorola")) {
                 bdao.delete(brand.getId());
             }
