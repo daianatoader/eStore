@@ -11,6 +11,8 @@ public interface IBrandDAO {
 
     Brand getById(int id);
 
+    Brand getByName(String name);
+
     void add(Brand brand);
 
     void update(Brand brand);

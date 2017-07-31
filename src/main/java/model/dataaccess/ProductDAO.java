@@ -2,61 +2,59 @@ package model.dataaccess;
 
 import model.entities.Product;
 import model.entities.Section;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
 import static main.MainClass.factory;
 
 /**
- * DAO class for Section entity that implements ISectionDAO which defines CRUD operations
+ * DAO class for Product entity that implements IProductDAO which defines CRUD operations
  */
-public class SectionDAO implements ISectionDAO {
+public class ProductDAO implements IProductDAO {
 
-    public SectionDAO() {
+    public ProductDAO() {
     }
 
 
     /**
-     * method that return a list of Section objects with data from DB
+     * method that return a list of Product objects with data from DB
      *
-     * @return List<Section>
+     * @return List<Product>
      */
-    public List<Section> getAll() {
+    public List<Product> getAll() {
         Session session = factory.openSession();
-        List sections = null;
+        List products = null;
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            sections = session.createQuery("from model.entities.Section").list();
+            products = session.createQuery("from model.entities.Product").list();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return sections;
+        return products;
     }
 
     /**
-     * method that returns an abject of type Section with data from DB
+     * method that returns an abject of type Product with data from DB
      *
      * @param id
-     * @return Section
+     * @return Product
      */
-    public Section getById(int id) {
-        Section section = null;
+    public Product getById(int id) {
+        Product product = null;
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                section = session.load(Section.class, id);
+                product = session.load(Product.class, id);
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
                 e.printStackTrace();
@@ -66,51 +64,21 @@ public class SectionDAO implements ISectionDAO {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-        return section;
-    }
-
-    /**
-     * Method that returns a Section by name
-     *
-     * @param name
-     * @return
-     */
-    @Override
-    public Section getByName(String name) {
-        Section section = null;
-        try {
-            Session session = factory.openSession();
-            Transaction tx = null;
-            Criteria cr = null;
-            try {
-                tx = session.beginTransaction();
-                cr = session.createCriteria(Section.class);
-                cr.add(Restrictions.eq("sectionName", name));
-                section = (Section) cr.uniqueResult();
-            } catch (HibernateException e) {
-                if (tx != null) tx.rollback();
-                e.printStackTrace();
-            } finally {
-                session.close();
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-        return section;
+        return product;
     }
 
     /**
      * method that adds data in DB
      *
-     * @param section
+     * @param product
      */
-    public void add(Section section) {
+    public void add(Product product) {
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                session.save(section);
+                session.save(product);
                 tx.commit();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
@@ -126,15 +94,15 @@ public class SectionDAO implements ISectionDAO {
     /**
      * method that updates data in DB
      *
-     * @param section
+     * @param product
      */
-    public void update(Section section) {
+    public void update(Product product) {
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                session.update(section);
+                session.update(product);
                 tx.commit();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
@@ -148,17 +116,17 @@ public class SectionDAO implements ISectionDAO {
     }
 
     /**
-     * method that deletes a field form section table from DB
+     * method that deletes a field form Product table from DB
      *
-     * @param section
+     * @param product
      */
-    public void delete(Section section) {
+    public void delete(Product product) {
         try {
             Session session = factory.openSession();
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                session.delete(section);
+                session.delete(product);
                 tx.commit();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();

@@ -10,6 +10,8 @@ public interface ISectionDAO {
 
     Section getById(int id);
 
+    Section getByName(String name);
+
     void add(Section section);
 
     void update(Section section);

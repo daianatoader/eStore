@@ -74,11 +74,16 @@ CREATE TABLE campaign (
 id int not null auto_increment,
 details varchar(200),
 period varchar(100),
-sale_id int,
+disctount int,
+PRIMARY KEY (id));
+
+CREATE TABLE product_campaign
+(id int not NULL auto_increment,
 product_id int,
+campaign_id int,
 PRIMARY KEY (id),
 FOREIGN KEY (product_id) REFERENCES product(id),
-FOREIGN KEY (sale_id) REFERENCES sale_products(id));
+FOREIGN KEY (campaign_id) REFERENCES campaign(id));
     
 
     

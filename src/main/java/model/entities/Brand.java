@@ -1,6 +1,8 @@
 package model.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "brand")
@@ -16,12 +18,16 @@ public class Brand {
     @Column(name = "description")
     private String description;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "brand")
+    private Set<Product> products;
+
     public Brand() {
     }
 
     public Brand(String brandName, String description) {
         this.brandName = brandName;
         this.description = description;
+        this.products = new HashSet<Product>(0);
     }
 
     public int getId() {
@@ -47,5 +53,13 @@ public class Brand {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Product product) {
+        this.products.add(product);
     }
 }

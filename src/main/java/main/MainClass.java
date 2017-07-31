@@ -2,30 +2,31 @@
 package main;
 
 
-import model.dataaccess.BrandDAO;
-import model.dataaccess.IBrandDAO;
+import model.dataaccess.*;
 import org.hibernate.SessionFactory;
 import model.entities.*;
+import org.hibernate.cfg.Configuration;
 
-import static model.dataaccess.BrandDAO.getConfig;
+
 
 public class MainClass {
     public static SessionFactory factory;
 
+    public static void getConfig() {
+        try {
+            factory = new Configuration().
+                    configure().
+                    addPackage("model.entities"). //add package if used.
+                    addAnnotatedClass(Product.class).
+                    addAnnotatedClass(Section.class).
+                    addAnnotatedClass(Brand.class).
+                    buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
     public static void main(String[] args) {
 
-        getConfig();
-
-        IBrandDAO bdao = new BrandDAO();
-        Brand brand = new Brand("Philips", "electronice");
-        Brand brand2 = new Brand("Colgate", "igiena");
-        bdao.add(brand);
-        bdao.add(brand2);
-        bdao.delete(bdao.getById(3));
-
-        for (Brand b : bdao.getAll())
-            System.out.println(b.getBrandName() + " " + b.getDescription());
-
-        System.out.println(bdao.getById(1).getBrandName());
     }
 }

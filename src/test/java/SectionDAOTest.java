@@ -4,7 +4,7 @@ import model.entities.Section;
 import org.junit.*;
 
 
-import static model.dataaccess.SectionDAO.getConfig;
+import static main.MainClass.getConfig;
 import static org.junit.Assert.*;
 
 
@@ -20,26 +20,26 @@ public class SectionDAOTest {
         Section section = new Section("Electronice");
         sdao.add(section);
         boolean tr = false;
-        for (Section Section : sdao.getAll()) {
-            if (Section.getSectionName().equals("Electronice")) {
+        for (Section sectionTmp : sdao.getAll()) {
+            if (sectionTmp.getSectionName().equals("Electronice")) {
                 tr = true;
             }
         }
         assertTrue(tr);
 
         //---------------------UPDATE-TEST--------------------------
-        for (Section Section : sdao.getAll()) {
-            if (Section.getSectionName().equals("Electronice")) {
-                Section.setSectionName("Electrocasnice");
-                sdao.update(Section);
-                assertTrue(sdao.getById(Section.getId()).getSectionName().equals("Electrocasnice"));
+        for (Section sectionTmp : sdao.getAll()) {
+            if (sectionTmp.getSectionName().equals("Electronice")) {
+                sectionTmp.setSectionName("Electrocasnice");
+                sdao.update(sectionTmp);
+                assertTrue(sdao.getById(sectionTmp.getId()).getSectionName().equals("Electrocasnice"));
             }
         }
 
         //---------------------DELETE-TEST--------------------------
-        for (Section Section : sdao.getAll()) {
-            if (Section.getSectionName().equals("Electrocasnice")) {
-                sdao.delete(Section);
+        for (Section sectionTmp : sdao.getAll()) {
+            if (sectionTmp.getSectionName().equals("Electrocasnice")) {
+                sdao.delete(sectionTmp);
             }
         }
 

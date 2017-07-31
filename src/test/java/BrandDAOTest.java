@@ -4,7 +4,7 @@ import model.entities.Brand;
 import org.junit.*;
 
 
-import static model.dataaccess.BrandDAO.getConfig;
+import static main.MainClass.getConfig;
 import static org.junit.Assert.*;
 
 

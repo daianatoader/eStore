@@ -1,10 +1,11 @@
 package model.dataaccess;
 
 import model.entities.Brand;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -19,18 +20,6 @@ public class BrandDAO implements IBrandDAO {
     public BrandDAO() {
     }
 
-    public static void getConfig() {
-        try {
-            factory = new Configuration().
-                    configure().
-                    addPackage("model.entities"). //add package if used.
-                    addAnnotatedClass(Brand.class).
-                    buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
 
     /**
      * method that selects all information from brand table
@@ -67,6 +56,36 @@ public class BrandDAO implements IBrandDAO {
             try {
                 tx = session.beginTransaction();
                 brand = session.load(Brand.class, id);
+            } catch (HibernateException e) {
+                if (tx != null) tx.rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        return brand;
+    }
+
+    /**
+     * Method that returns a Brand based on a name
+     *
+     * @param name
+     * @return
+     */
+    @Override
+    public Brand getByName(String name) {
+        Brand brand = null;
+        try {
+            Session session = factory.openSession();
+            Transaction tx = null;
+            Criteria cr = null;
+            try {
+                tx = session.beginTransaction();
+                cr = session.createCriteria(Brand.class);
+                cr.add(Restrictions.eq("brandName", name));
+                brand = (Brand) cr.uniqueResult();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
                 e.printStackTrace();
