@@ -1,10 +1,9 @@
 import model.dataaccess.*;
-import model.entities.Campaign;
-import org.junit.*;
-
 import model.entities.Brand;
+import model.entities.Campaign;
 import model.entities.Product;
 import model.entities.Section;
+import org.junit.Test;
 
 import static main.MainClass.getConfig;
 import static org.junit.Assert.*;
@@ -22,7 +21,7 @@ public class CampaignDAOTest {
         ISectionDAO sdao = new SectionDAO();
         IProductDAO pdao = new ProductDAO();
         //--------------------ADD_TEST------------------
-        Campaign a = new Campaign("reducereTel","1234",6);
+        Campaign a = new Campaign("reducereTel", "1234", 6);
         Section section = new Section("Electronics");
         Brand brand = new Brand("LG", "telefoane");
         bdao.add(brand);
@@ -37,33 +36,23 @@ public class CampaignDAOTest {
         a.setProducts(product2);
         campDao.add(a);
         boolean tr = false;
-        for (Campaign campaign : campDao.getAll()) {
-           if(campaign.getDetails().equals("reducereTel"))
-               tr=true;
-        }
-        assertTrue(tr);
+
+        //-------------SELECT-TEST-----------------------
+        Campaign campaign = campDao.getById(a.getId());
+        assertNotNull(campaign);
 
 
         //-------------UPDATE-TEST-----------------------
-        Campaign a1 = new Campaign("reducereTel", "2356",6);
-        for (Campaign campaign : campDao.getAll()) {
-            if(campaign.getDetails().equals("reducereTel")){
-                campDao.update(campDao.getById(campaign.getId()));
-                assertTrue(campDao.getById(campaign.getId()).getDetails().equals("reducereTel"));
-            }
-        }
+        campaign.setDetails("Reducere Telefon");
+        campDao.update(campaign);
+
+        Campaign reloadedCampaign = campDao.getById(a.getId());
+        assertTrue(reloadedCampaign.getDetails().equals("Reducere Telefon"));
 
 
         //-------------DELETE-TEST-----------------------
-
-        for (Campaign campaign : campDao.getAll()) {
-            if (campaign.getDetails().equals("reducereTel")) {
-                campDao.delete(campDao.getById(campaign.getId()));
-            }
-        }
-
-        //-------------SELECT-TEST-----------------------
-        assertFalse(campDao.getAll().toString().contains("reducereTel"));
+        campDao.delete(campaign);
+        assertFalse(campDao.getAll().toString().contains("Reducere Telefon"));
     }
 
 }
