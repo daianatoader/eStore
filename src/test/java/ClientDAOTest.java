@@ -19,33 +19,15 @@ public class ClientDAOTest {
         //----------------------ADD_TEST------------------------------
         Client c = new Client("CaraianIoana", "info", "Caraian", "Ioana", "caraian.ioana@yahoo.com", 736627543L, "Str.Gradinarilor", 6578);
         cdao.add(c);
-        boolean tr = false;
-        for (Client client : cdao.getAll()) {
-            if (client.getFirst_name().equals("Caraian")) {
-                tr = true;
-            }
-        }
-        assertTrue(tr);
-
-        //---------------------UPDATE-TEST--------------------------
-
-        for (Client client : cdao.getAll()) {
-            if (client.getFirst_name().equals("Caraian")) {
-                client.setParola("info300");
-                cdao.update(client);
-                assertTrue(cdao.getById(client.getId()).getParola().equals("info300"));
-            }
-        }
-
-        //---------------------DELETE-TEST--------------------------
-
-        for (Client client : cdao.getAll()) {
-            if (client.getFirst_name().equals("Caraian")) {
-                cdao.delete(client);
-            }
-        }
-
         //---------------------SELECT-TEST--------------------------
+        Client reloadedClient = cdao.getById(c.getId());
+        assertNotNull(reloadedClient);
+        //---------------------UPDATE-TEST--------------------------
+        reloadedClient.setParola("info300");
+        cdao.update(reloadedClient);
+        assertTrue(cdao.getById(reloadedClient.getId()).getParola().equals("info300"));
+        //---------------------DELETE-TEST--------------------------
+        cdao.delete(reloadedClient);
         assertFalse(cdao.getAll().toString().contains("Caraian"));
     }
 }

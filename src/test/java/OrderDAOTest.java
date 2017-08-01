@@ -21,32 +21,19 @@ public class OrderDAOTest {
         //----------------------ADD_TEST------------------------------
         Order o = new Order(117F, PaymentMethod.CASH, ShippingMethod.FAST, OrderStatus.WAITING);
         odao.add(o);
-        boolean tr = false;
-        for (Order order : odao.getAll()) {
-            if (order.getShippingMethod().equals(ShippingMethod.FAST))
-                tr = true;
-        }
-        assertTrue(tr);
-
-        //---------------------UPDATE-TEST--------------------------
-
-        for (Order order : odao.getAll()) {
-            if (order.getShippingMethod().equals(ShippingMethod.FAST)) {
-                order.setOrderStatus(OrderStatus.DELIVERED);
-                odao.update(order);
-                assertTrue(odao.getById(order.getId()).getOrderStatus().equals(OrderStatus.DELIVERED));
-            }
-        }
-
-        //---------------------DELETE-TEST--------------------------
-
-        for (Order order : odao.getAll()) {
-            if (order.getShippingMethod().equals(ShippingMethod.FAST)) {
-                odao.delete(order);
-            }
-        }
 
         //---------------------SELECT-TEST--------------------------
-        assertFalse(odao.getAll().toString().contains("ShippingMethod.FAST"));
+        Order reloadedOrder = odao.getById(o.getId());
+        assertNotNull(reloadedOrder);
+
+        //---------------------UPDATE-TEST--------------------------
+        reloadedOrder.setShippingMethod(ShippingMethod.NORMAL);
+        odao.update(reloadedOrder);
+        assertTrue(odao.getById(reloadedOrder.getId()).getShippingMethod().equals(ShippingMethod.NORMAL));
+
+        //---------------------DELETE TEST-------------------------
+
+        odao.delete(reloadedOrder);
+        assertFalse(odao.getAll().toString().contains("ShippingMethod.NORMAL"));
     }
 }

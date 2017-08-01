@@ -81,17 +81,7 @@ public class ClientDAO implements IClientDAO {
         Integer clientID = null;
         try {
             tx = session.beginTransaction();
-            Client clnt = new Client(client.getUsername(), client.getParola(), client.getFirst_name(),
-                    client.getLast_name(), client.getEmail(), client.getPhone(), client.getAdress(), client.getCard_number());
-            clnt.setUsername(client.getUsername());
-            clnt.setParola(client.getParola());
-            clnt.setFirst_name(client.getFirst_name());
-            clnt.setLast_name(client.getLast_name());
-            clnt.setEmail(client.getEmail());
-            clnt.setPhone(client.getPhone());
-            clnt.setAdress(client.getAdress());
-            clnt.setCard_number(client.getCard_number());
-            clientID = (Integer) session.save(clnt);
+            clientID = (Integer) session.save(client);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
