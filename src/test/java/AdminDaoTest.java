@@ -1,10 +1,11 @@
 import model.dataaccess.AdminDAO;
 import model.dataaccess.IAdminDAO;
 import model.entities.Admin;
-import org.junit.*;
+import org.junit.Test;
 
 import static main.MainClass.getConfig;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AdminDaoTest {
 
@@ -15,39 +16,28 @@ public class AdminDaoTest {
         getConfig();
         IAdminDAO adao = new AdminDAO();
 
-
         //--------------------ADD_TEST------------------
         Admin a = new Admin("deni", "1234");
         adao.add(a);
-        boolean tr = false;
-        for (Admin admin : adao.getAll()) {
-            if (admin.getUsername().equals("deni")) {
-                tr = true;
-            }
-        }
-        assertTrue(tr);
+
+        //-------------SELECT-TEST-----------------------
+        Admin admin = adao.getById(a.getID());
 
 
         //-------------UPDATE-TEST-----------------------
-        Admin a1 = new Admin("deni", "2344");
-        for (Admin admin : adao.getAll()) {
-            if (admin.getUsername().equals("deni")) {
-                adao.update(adao.getById(admin.getID()));
-                assertTrue(adao.getById(admin.getID()).getUsername().equals("deni"));
-            }
-        }
+        admin.setPAROLA("12345");
+        adao.update(admin);
 
+        Admin reloadedAdmin = adao.getById(a.getID());
+        assertTrue(reloadedAdmin.getPAROLA().equals("12345"));
 
         //-------------DELETE-TEST-----------------------
-
-        for (Admin admin : adao.getAll()) {
-            if (admin.getUsername().equals("deni")) {
-                adao.delete(adao.getById(admin.getID()));
-            }
-        }
-
-        //-------------SELECT-TEST-----------------------
+        adao.delete(admin);
         assertFalse(adao.getAll().toString().contains("deni"));
     }
 
 }
+
+
+
+
