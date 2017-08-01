@@ -2,11 +2,25 @@ package model.entities;
 
 import javax.persistence.*;
 
-@Table(name= "clients")
+@Entity
+@Table(name = "client")
 public class Client {
-    @Id @GeneratedValue
-    @Column(name = "ID")
-    private int ID;
+
+    public Client(String username, String parola, String first_name, String last_name, String email, long phone, String adress, int card_number) {
+        this.username = username;
+        this.parola = parola;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone = phone;
+        this.adress = adress;
+        this.card_number = card_number;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "username")
     private String username;
@@ -33,8 +47,13 @@ public class Client {
     private int card_number;
 
     public Client( ){}
-    public void setID(int ID) {
-        this.ID = ID;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
