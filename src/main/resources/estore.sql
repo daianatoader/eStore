@@ -10,7 +10,7 @@ PRIMARY KEY (id));
 
 CREATE table brand(
 id int not null auto_increment,
-brand_name varchar(100),
+brand_name varchar(100) unique,
 description varchar(500),
 PRIMARY KEY (id));
 
@@ -38,7 +38,7 @@ FOREIGN KEY (client_id) REFERENCES client(id));
 
 CREATE TABLE section (
 id int not null auto_increment,
-section_name varchar(100),
+section_name varchar(100) unique,
 PRIMARY KEY (id));
 
 CREATE TABLE product
