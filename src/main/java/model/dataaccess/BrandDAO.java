@@ -7,6 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 import static main.MainClass.factory;
@@ -74,18 +78,17 @@ public class BrandDAO implements IBrandDAO {
      * @param name
      * @return
      */
-    @Override
     public Brand getByName(String name) {
         Brand brand = null;
         try {
             Session session = factory.openSession();
             Transaction tx = null;
-            Criteria cr = null;
+
             try {
                 tx = session.beginTransaction();
-                cr = session.createCriteria(Brand.class);
-                cr.add(Restrictions.eq("brandName", name));
-                brand = (Brand) cr.uniqueResult();
+                Query query = session.createQuery("from model.entities.Brand brand where brand.brandName = :name");
+                query.setParameter("name", name);
+                brand = (Brand) query.getSingleResult();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
                 e.printStackTrace();

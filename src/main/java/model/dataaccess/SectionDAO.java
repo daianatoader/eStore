@@ -1,14 +1,12 @@
 package model.dataaccess;
 
-import model.entities.Product;
+
 import model.entities.Section;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
 
+import javax.persistence.Query;
 import java.util.List;
 
 import static main.MainClass.factory;
@@ -75,18 +73,16 @@ public class SectionDAO implements ISectionDAO {
      * @param name
      * @return
      */
-    @Override
     public Section getByName(String name) {
         Section section = null;
         try {
             Session session = factory.openSession();
             Transaction tx = null;
-            Criteria cr = null;
             try {
                 tx = session.beginTransaction();
-                cr = session.createCriteria(Section.class);
-                cr.add(Restrictions.eq("sectionName", name));
-                section = (Section) cr.uniqueResult();
+                Query query = session.createQuery("from model.entities.Section section where section.sectionName = :name");
+                query.setParameter("name", name);
+                section = (Section) query.getSingleResult();
             } catch (HibernateException e) {
                 if (tx != null) tx.rollback();
                 e.printStackTrace();

@@ -28,20 +28,14 @@ public class SectionDAOTest {
         assertTrue(tr);
 
         //---------------------UPDATE-TEST--------------------------
-        for (Section sectionTmp : sdao.getAll()) {
-            if (sectionTmp.getSectionName().equals("Electronice")) {
-                sectionTmp.setSectionName("Electrocasnice");
-                sdao.update(sectionTmp);
-                assertTrue(sdao.getById(sectionTmp.getId()).getSectionName().equals("Electrocasnice"));
-            }
-        }
+
+        section.setSectionName("Electrocasnice");
+        sdao.update(section);
+        Section sectionReloadedFromBD = sdao.getByName("Electrocasnice");
+        assertTrue(sectionReloadedFromBD.getSectionName().equals("Electrocasnice"));
 
         //---------------------DELETE-TEST--------------------------
-        for (Section sectionTmp : sdao.getAll()) {
-            if (sectionTmp.getSectionName().equals("Electrocasnice")) {
-                sdao.delete(sectionTmp);
-            }
-        }
+        sdao.delete(section);
 
         //---------------------SELECT-TEST--------------------------
         assertFalse(sdao.getAll().toString().contains("Electrocasnice"));

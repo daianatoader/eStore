@@ -17,31 +17,24 @@ public class BrandDAOTest {
         IBrandDAO bdao = new BrandDAO();
 
         //----------------------ADD_TEST------------------------------
-        Brand b = new Brand("Motorola", "telefoane");
-        bdao.add(b);
+        Brand brand = new Brand("Motorola", "telefoane");
+        bdao.add(brand);
         boolean tr = false;
-        for (Brand brand : bdao.getAll()) {
-            if (brand.getBrandName().equals("Motorola")) {
+        for (Brand b : bdao.getAll()) {
+            if (b.getBrandName().equals("Motorola")) {
                 tr = true;
             }
         }
         assertTrue(tr);
 
         //---------------------UPDATE-TEST--------------------------
-        for (Brand brand : bdao.getAll()) {
-            if (brand.getBrandName().equals("Motorola")) {
-                brand.setDescription("electronice");
-                bdao.update(brand);
-                assertTrue(bdao.getById(brand.getId()).getDescription().equals("electronice"));
-            }
-        }
+        brand.setDescription("electronice");
+        bdao.update(brand);
+        Brand brandReloadedFromBD = bdao.getById(brand.getId());
+        assertTrue(brandReloadedFromBD.getDescription().equals("electronice"));
 
         //---------------------DELETE-TEST--------------------------
-        for (Brand brand : bdao.getAll()) {
-            if (brand.getBrandName().equals("Motorola")) {
-                bdao.delete(brand);
-            }
-        }
+        bdao.delete(brand);
 
         //---------------------SELECT-TEST--------------------------
         assertFalse(bdao.getAll().toString().contains("Motorola"));

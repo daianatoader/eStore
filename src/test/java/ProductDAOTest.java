@@ -42,20 +42,15 @@ public class ProductDAOTest {
         assertTrue(tr);
 
         //---------------------UPDATE-TEST--------------------------
-        for (Product productTmp : pdao.getAll()) {
-            if (productTmp.getProductName().equals("Telefon")) {
-                productTmp.setProductName("Smartphone");
-                pdao.update(productTmp);
-                assertTrue(pdao.getById(productTmp.getId()).getProductName().equals("Smartphone"));
-            }
-        }
+
+        product.setProductName("Smartphone");
+        pdao.update(product);
+        Product productReloadedFromBD = pdao.getById(product.getId());
+        assertTrue(productReloadedFromBD.getProductName().equals("Smartphone"));
 
         //---------------------DELETE-TEST--------------------------
-        for (Product productTmp : pdao.getAll()) {
-            if (productTmp.getProductName().equals("Smartphone")) {
-                pdao.delete(productTmp);
-            }
-        }
+
+        pdao.delete(product);
         bdao.delete(brandTmp);
         sdao.delete(sectionTmp);
 
