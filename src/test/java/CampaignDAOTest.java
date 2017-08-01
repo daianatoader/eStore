@@ -2,6 +2,9 @@ import model.dataaccess.*;
 import model.entities.Campaign;
 import org.junit.*;
 
+import model.entities.Brand;
+import model.entities.Product;
+import model.entities.Section;
 
 import static main.MainClass.getConfig;
 import static org.junit.Assert.*;

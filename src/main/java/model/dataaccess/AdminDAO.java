@@ -77,21 +77,23 @@ public class AdminDAO implements IAdminDAO{
      * @param admin
      */
     public void add(Admin admin) {
-        Session session = factory.openSession();
-        Transaction tx = null;
-        Integer adminID = null;
-        try{
-            tx = session.beginTransaction();
-            Admin adm = new Admin(admin.getUsername(),admin.getPAROLA());
-            adm.setUsername(admin.getUsername());
-            adm.setPAROLA(admin.getPAROLA());
-            adminID = (Integer) session.save(adm);
-            tx.commit();
-        }catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            e.printStackTrace();
-        }finally {
-            session.close();
+        try {
+
+            Session session = factory.openSession();
+            Transaction tx = null;
+            //Integer adminID = null;
+            try {
+                tx = session.beginTransaction();
+                session.save(admin);
+                tx.commit();
+            } catch (HibernateException e) {
+                if (tx != null) tx.rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
