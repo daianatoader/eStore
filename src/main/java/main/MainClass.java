@@ -16,6 +16,11 @@ public class MainClass {
                     addPackage("model.entities"). //add package if used.
                     addAnnotatedClass(Order.class).
                     addAnnotatedClass(Client.class).
+                    addAnnotatedClass(Admin.class).
+                    addAnnotatedClass(Brand.class).
+                    addAnnotatedClass(Campaign.class).
+                    addAnnotatedClass(Section.class).
+                    addAnnotatedClass(Product.class).
                     buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
