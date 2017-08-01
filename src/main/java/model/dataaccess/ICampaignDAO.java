@@ -1,11 +1,12 @@
 package model.dataaccess;
 
 import model.entities.*;
-import java.util.ArrayList;
+
+import java.util.List;
 
 public interface ICampaignDAO {
 
-    ArrayList<Campaign> getAll();
+    List<Campaign> getAll();
     Campaign getById(int id);
     void add(Campaign campaign);
     void update(Campaign campaign);

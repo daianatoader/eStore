@@ -3,7 +3,7 @@ import model.dataaccess.IAdminDAO;
 import model.entities.Admin;
 import org.junit.*;
 
-import static model.dataaccess.AdminDAO.getConfig;
+import static main.MainClass.getConfig;
 import static org.junit.Assert.*;
 
 public class AdminDaoTest {

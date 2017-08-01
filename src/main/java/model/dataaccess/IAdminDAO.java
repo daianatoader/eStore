@@ -1,11 +1,12 @@
 package model.dataaccess;
 
 import model.entities.*;
-import java.util.ArrayList;
+
+import java.util.List;
 
 public interface IAdminDAO {
 
-    ArrayList<Admin> getAll();
+    List<Admin> getAll();
     Admin getById(int id);
     void add(Admin admin);
     void update(Admin admin);

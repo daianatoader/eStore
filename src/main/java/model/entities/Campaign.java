@@ -1,5 +1,6 @@
 package model.entities;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,13 +25,20 @@ public class Campaign {
     private int discount;
 
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_campaign", joinColumns = {
+            @JoinColumn(name = "campaign_id", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "product_id",
+                    nullable = false)})
+    private Set<Product> products;
+
     public Campaign() { }
 
     public Campaign(String details, String period, int discount) {
         this.details = details;
         this.period = period;
         this.discount = discount;
-
+        this.products = new HashSet<Product>(0);
     }
 
     public int getId() {
@@ -63,6 +71,14 @@ public class Campaign {
 
     public void setDiscount(int discount) {
         this.discount = discount;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Product product) {
+        this.products.add(product);
     }
 }
 

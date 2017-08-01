@@ -4,32 +4,25 @@ import model.entities.Admin;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import static main.MainClass.factory;
 
-
+/**
+ * DAO class for Admin entity that implements IAdminDAO which defines CRUD operations
+ */
 public class AdminDAO implements IAdminDAO{
 
 
     public AdminDAO(){}
 
-    public static void getConfig() {
-        try {
-            factory = new Configuration().
-                    configure().
-                    addPackage("model.entities"). //add package if used.
-                    addAnnotatedClass(Admin.class).
-                    buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
 
-    public ArrayList<Admin> getAll() {
+    /**
+     * method that selects all infromation from admin table
+     *
+     * @return ArrayList<Admin>
+     */
+    public List<Admin> getAll() {
 
         Session session = factory.openSession();
         List admins=null;
@@ -44,7 +37,7 @@ public class AdminDAO implements IAdminDAO{
         }finally {
             session.close();
         }
-        return (ArrayList<Admin>)admins;
+        return admins;
     }
 
      /*
@@ -53,6 +46,13 @@ public class AdminDAO implements IAdminDAO{
     }
     */
 
+
+    /**
+     * method that returns a Admin based on ID
+     *
+     * @param id
+     * @return Admin
+     */
     public Admin getById(int id) {
 
         Session session = factory.openSession();
@@ -72,6 +72,10 @@ public class AdminDAO implements IAdminDAO{
     }
 
 
+    /**
+     * method that adds a new Admin object in DB
+     * @param admin
+     */
     public void add(Admin admin) {
         Session session = factory.openSession();
         Transaction tx = null;
@@ -91,6 +95,10 @@ public class AdminDAO implements IAdminDAO{
         }
     }
 
+    /**
+     * merthod that updates data based on ID
+     * @param admin
+     */
     public void update(Admin admin) {
         Session session = factory.openSession();
         Transaction tx = null;
@@ -107,7 +115,10 @@ public class AdminDAO implements IAdminDAO{
 
     }
 
-
+    /**
+     * method that deletes a admin from DB based on ID
+     * @param admin
+     */
     public void delete(Admin admin) {
         Session session = factory.openSession();
         Transaction tx = null;
