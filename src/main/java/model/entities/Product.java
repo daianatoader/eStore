@@ -2,6 +2,8 @@ package model.entities;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -29,6 +31,12 @@ public class Product {
     @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    private Set<Campaign> campaigns;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+    private Set<Order> orders;
+
     public Product() {
     }
 
@@ -38,6 +46,8 @@ public class Product {
         this.price = price;
         this.section = section;
         this.brand = brand;
+        this.campaigns = new HashSet<Campaign>(0);
+        this.orders = new HashSet<Order>(0);
     }
 
     public int getId() {
@@ -86,5 +96,21 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public Set<Campaign> getCampaigns() {
+        return this.campaigns;
+    }
+
+    public void setCampaigns(Campaign campaign) {
+        this.campaigns.add(campaign);
+    }
+
+    public Set<Order> getOrders() {
+        return this.orders;
+    }
+
+    public void setOrders(Order order) {
+        this.orders.add(order);
     }
 }

@@ -20,6 +20,7 @@ public class MainClass {
                     addAnnotatedClass(Product.class).
                     addAnnotatedClass(Section.class).
                     addAnnotatedClass(Brand.class).
+                    addAnnotatedClass(Campaign.class).
                     buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
@@ -27,6 +28,7 @@ public class MainClass {
         }
     }
     public static void main(String[] args) {
+        getConfig();
 
     }
 }
