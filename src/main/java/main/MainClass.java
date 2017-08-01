@@ -1,13 +1,10 @@
 
 package main;
 
-
 import model.dataaccess.*;
-import org.hibernate.SessionFactory;
 import model.entities.*;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-
 
 public class MainClass {
     public static SessionFactory factory;
@@ -17,16 +14,23 @@ public class MainClass {
             factory = new Configuration().
                     configure().
                     addPackage("model.entities"). //add package if used.
-                    addAnnotatedClass(Product.class).
-                    addAnnotatedClass(Section.class).
+                    addAnnotatedClass(Order.class).
+                    addAnnotatedClass(Client.class).
+                    addAnnotatedClass(Admin.class).
                     addAnnotatedClass(Brand.class).
+                    addAnnotatedClass(Campaign.class).
+                    addAnnotatedClass(Section.class).
+                    addAnnotatedClass(Product.class).
                     buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
+
     public static void main(String[] args) {
-        getConfig();
+
+
     }
 }
+
